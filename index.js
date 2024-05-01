@@ -23,23 +23,25 @@ async function loadNames(cat) {
     var names = [];
     if (fs.existsSync(constants.CONTENT_DIR)) {
 
+        
+
         var fileName = path.join(constants.CONTENT_DIR, cat + '.txt');
 
         if (fs.existsSync(fileName)) {
-            names = await readFileAsArray(fileName)
+            names = await readFileAsObjectArray(fileName)
         }
         else {
             // combine content of all files
             var allFiles = fs.readdirSync(constants.CONTENT_DIR, {
                 withFileTypes: true,
-                recursive: true
+                recursive: false
             })
 
             allFiles.forEach(async file => {
                 if (file.name.endsWith('.txt')) {
                     var catFileName = path.join(file.path, file.name);
                     
-                    var moreNames = await readFileAsArray(catFileName)
+                    var moreNames = await readFileAsObjectArray(catFileName)
                     moreNames.forEach(name => names.push(name))   
                 }
             })
@@ -49,9 +51,20 @@ async function loadNames(cat) {
     return names;
 }
 
-async function readFileAsArray(fileName) {
+function nameToObject(val){
+    var name = val.split(':')[0]
+    var desc = val.split(':')[1]
+
+    return {
+        name, 
+        description: desc
+    }
+}
+
+async function readFileAsObjectArray(fileName) {
     var content = fs.readFileSync(fileName, 'utf-8');
-    return content.split(os.EOL).map(val => val.trim());
+    var names = content.split(os.EOL).map(val => val.trim());
+    return names.map(name => nameToObject(name));
 }
 
 app.listen(port, () => {
