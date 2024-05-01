@@ -22,13 +22,10 @@ app.get('/names/:cat?/:page?',  async (req, res) =>  {
 async function loadNames(cat) {
     var names = [];
     if (fs.existsSync(constants.CONTENT_DIR)) {
-
-        
-
         var fileName = path.join(constants.CONTENT_DIR, cat + '.txt');
 
         if (fs.existsSync(fileName)) {
-            names = await readFileAsObjectArray(fileName)
+            names = readFileAsObjectArray(fileName)
         }
         else {
             // combine content of all files
@@ -41,7 +38,7 @@ async function loadNames(cat) {
                 if (file.name.endsWith('.txt')) {
                     var catFileName = path.join(file.path, file.name);
                     
-                    var moreNames = await readFileAsObjectArray(catFileName)
+                    var moreNames = readFileAsObjectArray(catFileName)
                     moreNames.forEach(name => names.push(name))   
                 }
             })
@@ -61,7 +58,7 @@ function nameToObject(val){
     }
 }
 
-async function readFileAsObjectArray(fileName) {
+function readFileAsObjectArray(fileName) {
     var content = fs.readFileSync(fileName, 'utf-8');
     var names = content.split(os.EOL).map(val => val.trim());
     return names.map(name => nameToObject(name));
