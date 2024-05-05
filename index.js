@@ -7,7 +7,7 @@ const port = config.PORT
 
 const os = require('os')
 
-app.get('/names/:cat?/:page?',  async (req, res) =>  {
+app.get('/:cat?/:page?',  async (req, res) =>  {
 
 
     var extra = req.query.extra || '';
