@@ -66,5 +66,5 @@ function readFileAsObjectArray(fileName) {
 }
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on ${config.NODE_ENV} port ${port}`)
 })
