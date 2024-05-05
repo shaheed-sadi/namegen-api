@@ -21,15 +21,15 @@ app.get('/names/:cat?/:page?',  async (req, res) =>  {
 
 async function loadNames(cat) {
     var names = [];
-    if (fs.existsSync(constants.CONTENT_DIR)) {
-        var fileName = path.join(constants.CONTENT_DIR, cat + '.txt');
+    if (fs.existsSync(config.CONTENT_DIR)) {
+        var fileName = path.join(config.CONTENT_DIR, cat + '.txt');
 
         if (fs.existsSync(fileName)) {
             names = readFileAsObjectArray(fileName)
         }
         else {
             // combine content of all files
-            var allFiles = fs.readdirSync(constants.CONTENT_DIR, {
+            var allFiles = fs.readdirSync(config.CONTENT_DIR, {
                 withFileTypes: true,
                 recursive: false
             })
