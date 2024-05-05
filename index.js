@@ -5,7 +5,6 @@ const config = require('./config.js')
 const app = express()
 const port = config.PORT
 
-const constants = require('./constants.js');
 const os = require('os')
 
 app.get('/names/:cat?/:page?',  async (req, res) =>  {
