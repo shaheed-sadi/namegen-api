@@ -1,8 +1,9 @@
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
+const config = require('./config.js')
 const app = express()
-const port = 3000
+const port = config.PORT
 
 const constants = require('./constants.js');
 const os = require('os')
